@@ -62,3 +62,6 @@ Thumbs.db
 
 # Keep nested git repos out of outer index
 **/.git/
+
+# Explicitly keep safe config snapshot
+!openclaw.redacted.json
