@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "bindings": {
+    "default:1480496129643643013": {
+      "accountId": "default",
+      "channelId": "1479524789994524897",
+      "threadId": "1480496129643643013",
+      "targetKind": "subagent",
+      "targetSessionKey": "agent:main:subagent:5872402b-cd61-4d93-ac1c-34b21dcdd0d8",
+      "agentId": "main",
+      "label": "AI-Agent-Specialist",
+      "boundBy": "system",
+      "boundAt": 1773048183933,
+      "lastActivityAt": 1773077083378,
+      "idleTimeoutMs": 86400000,
+      "maxAgeMs": 0
+    },
+    "default:1480564004584951849": {
+      "accountId": "default",
+      "channelId": "1479524789994524897",
+      "threadId": "1480564004584951849",
+      "targetKind": "subagent",
+      "targetSessionKey": "agent:main:subagent:36ed1239-43d2-44cf-b8eb-0dbdfe64cb40",
+      "agentId": "main",
+      "label": "ERC8004-Specialist",
+      "boundBy": "system",
+      "boundAt": 1773064366951,
+      "lastActivityAt": 1773077069379,
+      "idleTimeoutMs": 86400000,
+      "maxAgeMs": 0
+    },
+    "default:1480619136752287873": {
+      "accountId": "default",
+      "channelId": "1479524789994524897",
+      "threadId": "1480619136752287873",
+      "targetKind": "subagent",
+      "targetSessionKey": "agent:main:subagent:d6eac18a-c675-41e9-b8cc-6b71d68a4e4b",
+      "agentId": "main",
+      "label": "Science-Chief",
+      "boundBy": "system",
+      "boundAt": 1773077511365,
+      "lastActivityAt": 1773077599479,
+      "idleTimeoutMs": 86400000,
+      "maxAgeMs": 0
+    }
+  }
+}

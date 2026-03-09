@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "cf0d917d-303d-4c62-8650-ad2a29dff798",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479524789994524897",
+      "name": "Watchdog ERC8004-Specialist liveness",
+      "enabled": false,
+      "createdAtMs": 1772877560993,
+      "updatedAtMs": 1772895561381,
+      "schedule": {
+        "kind": "every",
+        "everyMs": 1800000,
+        "anchorMs": 1772877560993
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Liveness watchdog: ensure ERC8004-Specialist session is alive and responsive. Canonical requirements: label 'ERC8004-Specialist', runtime subagent, thread-bound behavior, cwd /home/manuel/.openclaw/workspace/workspaces/erc8004-specialist. If missing/unresponsive, relaunch once and clean stale duplicate sessions. Write/update a short log entry in /home/manuel/.openclaw/workspace/workspaces/science-chief/logs/ERC8004_SUPERVISION_2026-03-07.md (or current-date supervision log). Only announce if recovery action was needed; otherwise no announcement."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1772895561024,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 357,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 1,
+        "lastError": "402 This request requires more credits, or fewer max_tokens. You requested up to 32000 tokens, but can only afford 2856. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account",
+        "lastDeliveryError": "402 This request requires more credits, or fewer max_tokens. You requested up to 32000 tokens, but can only afford 2856. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account"
+      }
+    }
+  ]
+}

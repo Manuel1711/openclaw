@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "cf0d917d-303d-4c62-8650-ad2a29dff798",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479524789994524897",
+      "name": "Watchdog ERC8004-Specialist liveness",
+      "enabled": false,
+      "createdAtMs": 1772877560993,
+      "updatedAtMs": 1772895561381,
+      "schedule": {
+        "kind": "every",
+        "everyMs": 1800000,
+        "anchorMs": 1772877560993
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Liveness watchdog: ensure ERC8004-Specialist session is alive and responsive. Canonical requirements: label 'ERC8004-Specialist', runtime subagent, thread-bound behavior, cwd /home/manuel/.openclaw/workspace/workspaces/erc8004-specialist. If missing/unresponsive, relaunch once and clean stale duplicate sessions. Write/update a short log entry in /home/manuel/.openclaw/workspace/workspaces/science-chief/logs/ERC8004_SUPERVISION_2026-03-07.md (or current-date supervision log). Only announce if recovery action was needed; otherwise no announcement."
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "lastRunAtMs": 1772895561024,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 357,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 1,
+        "lastError": "402 This request requires more credits, or fewer max_tokens. You requested up to 32000 tokens, but can only afford 2856. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account",
+        "lastDeliveryError": "402 This request requires more credits, or fewer max_tokens. You requested up to 32000 tokens, but can only afford 2856. To increase, visit https://openrouter.ai/settings/credits and upgrade to a paid account"
+      }
+    },
+    {
+      "id": "f3fdf835-9198-4c8f-a912-4f199f0c1721",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479524789994524897",
+      "name": "Morning efficiency remediation update for Manuel",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1772983964709,
+      "updatedAtMs": 1772983964709,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-03-09T06:30:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Reminder from Manuel: send a concise Italian update now with what was fixed overnight. Include: (1) top criticalities found across yesterday+today, (2) concrete fixes implemented and where (file paths), (3) remaining risks and today plan, (4) immediate decisions needed from Manuel. Keep it decision-grade and short."
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1479524789994524897"
+      },
+      "state": {
+        "nextRunAtMs": 1773037800000,
+        "runningAtMs": 1773037800001
+      }
+    }
+  ]
+}

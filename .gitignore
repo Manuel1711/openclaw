@@ -1,0 +1,65 @@
+# Secrets / env
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.crt
+
+# OpenClaw primary config (contains tokens/secrets)
+openclaw.json
+openclaw.json.bak*
+openclaw.json.*.bak.*
+openclaw.json.pre-restore.*
+openclaw.json.discordfix.*
+openclaw.json.codexonly.*
+openclaw.json~
+\#openclaw.json#
+
+# Agent auth/config backups that may embed API keys
+agents/**/agent/auth-profiles*.json*
+agents/**/agent/providers*.json*
+agents/**/agent/*.bak*
+
+# Runtime/session data
+agents/**/sessions/
+agents/**/transcripts/
+agents/**/state/
+subagents/runs.json
+logs/
+tmp/
+cache/
+media/
+state/
+*.log
+*.pid
+*.sock
+*.sqlite
+*.db
+
+# Sensitive runtime folders
+credentials/
+identity/
+delivery-queue/
+devices/
+
+# Browser user data (cookies/history/sessions)
+browser/openclaw/user-data/
+
+# Cron run history
+cron/runs/
+
+# Node / build
+node_modules/
+dist/
+build/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Keep nested git repos out of outer index
+workspace/
+**/.git/
