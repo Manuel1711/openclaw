@@ -54,6 +54,7 @@
 - **D-022 (2026-03-07):** ERC8004 reporting chain locked: Specialist publishes detailed technical updates → SC reviews and compresses to decision-grade summary → Cassia reports to Manuel; deep-dive with bots only on Manuel request.
 - **D-023 (2026-03-07):** Reporting quality standard reinforced by Manuel: reports must be punctual, precise, and scientifically rigorous (methods, results, limitations, blockers, next actions). This standard applies to SC/BC and all specialists.
 - **D-016 (2026-03-07):** SC/BC orchestration closure hardened with mandatory canonical registry + explicit multi-role exit criteria in runbook/playbook to prevent ambiguous handoff states.
+- **D-024 (2026-03-09):** Codex-usage control policy activated: `openai-codex` remains the fixed model; optimization must come from call-efficiency guardrails (batching, dedup, retry cap, prompt minimization) plus proactive quota/rate-limit alerts.
 - **D-024 (2026-03-09):** Discord intake policy hardened for Manuel's guild: mention-gating removed globally for guild `1479524789327761582` and explicit allow/enable/no-mention policy pinned for `#general` (`1479524789994524897`) to avoid silent drops due to policy drift.
 - **D-025 (2026-03-09):** Discord performance mitigation protocol applied: when channel session context approaches saturation (~70k+/90k), reset affected channel session(s) with pre-edit backup of `sessions.json` to restore responsiveness.
 
@@ -97,3 +98,9 @@
 - **B-012 (2026-03-07):** After model switch/restart, Discord chat path became unstable while terminal path still responded, causing inconsistent user experience.
   - **Cause:** Runtime path split (CLI session vs Discord gateway/thread binding) during/after restart and model override changes.
   - **Prevention:** Enforce post-switch stabilization protocol: (1) apply model change, (2) wait for restart settle, (3) send explicit "stabilized ✅" message in Discord, (4) run quick echo test in channel, (5) only then resume critical task flow.
+- **B-013 (2026-03-09):** Codex allowance was consumed too quickly during normal orchestration periods.
+  - **Cause:** Excess low-value calls (status/probing/retries/context-heavy prompts) were not consistently gated by strict efficiency rules.
+  - **Prevention:** Enforce codex efficiency policy: batch related requests, deduplicate near-identical asks, one-retry max with backoff, no retry loops, compact prompts, and quota alerts at warning/critical thresholds.
+- **B-014 (2026-03-09):** Working sub-repo outputs and report build artifacts risked polluting root-repo commits.
+  - **Cause:** Untracked nested repos/artifacts (`working/*`, LaTeX aux/log, generated files) were visible in root workspace without explicit guardrails.
+  - **Prevention:** Add root `.gitignore` protections for nested working repos and generated artifacts; use selective staging for preventive pushes.

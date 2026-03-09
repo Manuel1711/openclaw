@@ -22,3 +22,13 @@ Thumbs.db
 __pycache__/
 *.pyc
 *.pyo
+
+# Generated report/build artifacts
+*.aux
+*.log
+*.toc
+*.out
+
+# Nested working repositories and heavy dev artifacts
+workspaces/*/working/**/.git/
+workspaces/*/working/**/node_modules/
