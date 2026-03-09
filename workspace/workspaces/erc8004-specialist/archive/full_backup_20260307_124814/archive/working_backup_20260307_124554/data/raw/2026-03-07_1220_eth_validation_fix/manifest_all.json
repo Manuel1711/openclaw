@@ -1,0 +1,25 @@
+{
+  "generatedAt": 1772882119,
+  "outDir": "/home/manuel/.openclaw/workspace/workspaces/erc8004-specialist/working/data/raw/2026-03-07_1220_eth_validation_fix",
+  "chains": [
+    {
+      "chainName": "ethereum",
+      "chainId": 1,
+      "rpc": "https://mainnet.infura.io/v3/2effd6ddec5...",
+      "identityRegistry": "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432",
+      "reputationRegistry": "0x8004BAa17C55a88189AE136b182e5fdA19dE9b63",
+      "fromBlockRequested": 0,
+      "toBlock": 24605204,
+      "identityDeployBlock": 24339871,
+      "reputationDeployBlock": 24339873,
+      "chunkSizeDefault": 20000,
+      "files": {
+        "identity_registered": "/home/manuel/.openclaw/workspace/workspaces/erc8004-specialist/working/data/raw/2026-03-07_1220_eth_validation_fix/ethereum_1/identity_registered.csv",
+        "identity_metadataset": "/home/manuel/.openclaw/workspace/workspaces/erc8004-specialist/working/data/raw/2026-03-07_1220_eth_validation_fix/ethereum_1/identity_metadataset.csv",
+        "identity_transfer": "/home/manuel/.openclaw/workspace/workspaces/erc8004-specialist/working/data/raw/2026-03-07_1220_eth_validation_fix/ethereum_1/identity_transfer.csv",
+        "reputation_newfeedback": "/home/manuel/.openclaw/workspace/workspaces/erc8004-specialist/working/data/raw/2026-03-07_1220_eth_validation_fix/ethereum_1/reputation_newfeedback.csv",
+        "reputation_feedbackrevoked": "/home/manuel/.openclaw/workspace/workspaces/erc8004-specialist/working/data/raw/2026-03-07_1220_eth_validation_fix/ethereum_1/reputation_feedbackrevoked.csv"
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "agents_registered": 28380,
+  "agents_with_feedback": 1470,
+  "feedback_events": 2776,
+  "feedback_coverage_ratio": 0.05179704016913319,
+  "median_top1_share": 1.0,
+  "mean_top1_share": 0.9483080281194912
+}

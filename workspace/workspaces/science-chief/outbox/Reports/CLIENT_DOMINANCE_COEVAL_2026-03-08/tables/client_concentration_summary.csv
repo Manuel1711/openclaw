@@ -1,0 +1,10 @@
+metric,value
+n_clients,568.0
+total_feedback,2776.0
+gini_client_feedback,0.7808187380768763
+hhi_client_feedback,0.22193731365595593
+top_1pct_share,0.7031700288184438
+top_5pct_share,0.7694524495677233
+top_10pct_share,0.7943083573487032
+top10_clients_share,0.7190201729106628
+max_over_median_client_feedback,1215.0

@@ -61,5 +61,4 @@ Thumbs.db
 .idea/
 
 # Keep nested git repos out of outer index
-workspace/
 **/.git/

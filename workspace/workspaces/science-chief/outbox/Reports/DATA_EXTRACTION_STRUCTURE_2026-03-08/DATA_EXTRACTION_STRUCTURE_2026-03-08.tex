@@ -1,0 +1,75 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\title{DATA\_EXTRACTION\_STRUCTURE\_2026-03-08\\Scientific Technical Report}
+\author{Science-Chief}
+\date{2026-03-08}
+\begin{document}
+\maketitle
+
+\section*{1. Scope and Research Purpose}
+This document explains, in paper style, what data were extracted, from which on-chain sources, why they were extracted, and how the extraction pipeline is structured for ERC8004 analysis.
+Research objective: characterize identity adoption, feedback activation, concentration, and semantic usage in the ERC8004 ecosystem.
+
+\section*{2. Data Provenance (On-chain Registries)}
+Extraction was performed by interacting with Ethereum mainnet event logs from two registries:
+\begin{itemize}
+\item Identity Registry: \texttt{0x8004A169FB4a3325136EB29fA0ceB6D2e539a432}
+\item Reputation Registry: \texttt{0x8004BAa17C55a88189AE136b182e5fdA19dE9b63}
+\end{itemize}
+Reference window (validated run): block range approximately \texttt{24339925} to \texttt{24605141}.
+
+\section*{3. Why These Data Are Extracted}
+The extracted events allow us to study:
+\begin{itemize}
+\item Identity creation dynamics (how many agents are registered and when);
+\item Trust/feedback activation (how many identities receive feedback and after how long);
+\item Network concentration (who gives feedback and who receives it);
+\item Semantic layer (how \texttt{tag1/tag2} are used in feedback events).
+\end{itemize}
+
+\section*{4. Extraction Procedure (What We Actually Did)}
+\begin{enumerate}
+\item Preflight checks (configuration and run safety).
+\item Query logs from both registry addresses above.
+\item Decode event payloads and persist them into CSV artifacts.
+\item Store run artifacts under run-scoped folders and update latest pointer.
+\item Validate row counts, unique entities, and block coverage before analysis.
+\end{enumerate}
+
+\section*{5. Dataset Structure and Schema}
+Main extracted files and columns:
+\begin{itemize}
+\item \texttt{identity\_registered.csv} (event \texttt{Registered}):
+\texttt{blockNumber, transactionHash, logIndex, address, event, agentId, owner, agentURI}
+\item \texttt{identity\_transfer.csv} (event \texttt{Transfer}):
+\texttt{blockNumber, transactionHash, logIndex, address, event, from, to, tokenId}
+\item \texttt{reputation\_newfeedback.csv} (event \texttt{NewFeedback}):
+\texttt{blockNumber, transactionHash, logIndex, address, event, agentId, clientAddress, indexedTag1, feedbackIndex, value, valueDecimals, tag1, tag2, endpoint, feedbackURI, feedbackHash}
+\item \texttt{identity\_metadataset.csv}, \texttt{reputation\_feedbackrevoked.csv}: currently empty in this snapshot.
+\end{itemize}
+
+Each row corresponds to one on-chain event log; columns \texttt{address/event} tie the row to the originating registry and event type.
+
+\section*{6. Audited Quantities (Current Snapshot)}
+Registered agents: 28,380; feedback events: 2,776; agents with feedback: 1,470; transfer events: 37,293.
+These counts are consistent with current milestone analyses.
+
+\section*{7. Limitations and Interpretation Guardrails}
+\begin{itemize}
+\item ETH-only pass: no cross-chain generalization yet.
+\item Some semantic outputs depend on normalization (e.g., \texttt{tag1} heterogeneity).
+\item Time interpretations may require timestamp enrichment when block-time proxy is insufficient.
+\end{itemize}
+
+\section*{8. Decision and Next Steps}
+\textbf{Decision: GO for internal scientific use; HOLD for ecosystem-wide claims.}
+Next: timestamp enrichment defaults, multi-chain extension, and formal semantic QA.
+
+\section*{Appendix: Source Paths}
+\textbf{Tables}\\
+\begin{itemize}
+\item \texttt{workspaces/science-chief/outbox/Reports/DATA\_EXTRACTION\_STRUCTURE\_2026-03-08/tables/data\_audit\_table.tex}
+\item \texttt{workspaces/science-chief/outbox/Reports/DATA\_EXTRACTION\_STRUCTURE\_2026-03-08/tables/paths\_table.tex}
+\end{itemize}
+
+\end{document}

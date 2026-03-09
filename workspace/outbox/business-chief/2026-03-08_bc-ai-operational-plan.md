@@ -1,0 +1,44 @@
+- Objective
+  - Eseguire oggi un piano BC↔AI-Agent-Specialist orientato a delivery business: priorità T0 (oggi) e T1 (oggi+domani), con ownership chiara, dipendenze minime e KPI misurabili entro fine giornata.
+
+- Workstreams
+  - T0.1 Pipeline Prioritization Sprint
+    - Definire top-5 opportunità business attivabili con asset AI correnti (ICE score + time-to-value).
+    - Output: shortlist prioritaria + rationale 1 riga/opportunità.
+    - ETA: 11:45 CET.
+  - T0.2 Capability Mapping BC↔AI
+    - Mappare capacità/limiti AI-Agent-Specialist su ciascuna opportunità (latency, affidabilità, effort integrazione).
+    - Output: matrice Opportunity x Capability con semaforo (verde/giallo/rosso).
+    - ETA: 12:15 CET.
+  - T0.3 Execution Slice (Same-day)
+    - Selezionare 1 use-case “ship today” e fissare micro-milestone operative.
+    - Output: piano esecutivo 1-pager con task, owner, KPI, checkpoint.
+    - ETA: 13:00 CET.
+  - T1.1 KPI & Ops Cadence
+    - Definire dashboard minima (conversione lead→meeting, cycle time task, % task on-time, quality score output AI).
+    - Output: KPI sheet + soglie target.
+    - ETA: 15:30 CET.
+  - T1.2 Backlog 7 giorni
+    - Consolidare backlog ordinato per valore/impatto/rischio con dipendenze SC.
+    - Output: backlog priorizzato con milestone D+1…D+7.
+    - ETA: 17:00 CET.
+
+- Owners
+  - Business-Chief (owner primario)
+    - Prioritizzazione opportunità, definizione KPI business, orchestrazione milestone, reporting a Cassia/Manuel.
+  - AI-Agent-Specialist (co-owner tecnico)
+    - Capability mapping, stima effort/integrazione, vincoli tecnici, proposta setup operativo agenti.
+  - Science-Chief (dependency owner, consultivo)
+    - Conferma maturità linee R&D e finestre trasferimento tecnologia per opportunità borderline.
+
+- Risks
+  - Ritardo input tecnico da AI-Agent-Specialist (>60 min) impatta T0.2/T0.3.
+  - Dati incompleti per scoring opportunità (bias di priorità).
+  - Scope creep su use-case multipli: mitigazione = “ship one today”.
+  - Dipendenza SC su opportunità R&D-heavy può posticipare parte T1.
+
+- Next 24h
+  - Entro oggi 14:00 CET: consegna “Execution Slice” con un use-case pronto all’avvio operativo.
+  - Entro oggi 18:00 CET: KPI sheet + backlog 7 giorni condivisi.
+  - Domani 09:30 CET: stand-up BC↔AI 20 min su avanzamento, blocchi, ri-prioritizzazione.
+  - Domani 12:00 CET: primo checkpoint outcome su KPI leading (on-time %, cycle time, qualità output AI).
