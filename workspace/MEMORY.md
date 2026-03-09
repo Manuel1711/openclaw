@@ -54,6 +54,8 @@
 - **D-022 (2026-03-07):** ERC8004 reporting chain locked: Specialist publishes detailed technical updates → SC reviews and compresses to decision-grade summary → Cassia reports to Manuel; deep-dive with bots only on Manuel request.
 - **D-023 (2026-03-07):** Reporting quality standard reinforced by Manuel: reports must be punctual, precise, and scientifically rigorous (methods, results, limitations, blockers, next actions). This standard applies to SC/BC and all specialists.
 - **D-016 (2026-03-07):** SC/BC orchestration closure hardened with mandatory canonical registry + explicit multi-role exit criteria in runbook/playbook to prevent ambiguous handoff states.
+- **D-024 (2026-03-09):** Discord intake policy hardened for Manuel's guild: mention-gating removed globally for guild `1479524789327761582` and explicit allow/enable/no-mention policy pinned for `#general` (`1479524789994524897`) to avoid silent drops due to policy drift.
+- **D-025 (2026-03-09):** Discord performance mitigation protocol applied: when channel session context approaches saturation (~70k+/90k), reset affected channel session(s) with pre-edit backup of `sessions.json` to restore responsiveness.
 
 ## Bugs & Preventive Playbook
 - **B-001 (2026-03-06):** ACP spawn failed: `ACP target agent is not configured`.
