@@ -2734,3 +2734,176 @@
 - Outcome:
   - Overnight maintenance cycle completed successfully.
   - Edits remained internal and non-destructive; affected outputs regenerated in place.
+
+## 2026-03-19 02:20 CET (01:20 UTC)
+
+- Scope executed:
+  1. Re-ran full empirics pipeline (`step00`..`step06`) to re-check script/table/figure reproducibility end-to-end.
+  2. Recompiled all summary PDFs (`STEP_00`..`STEP_06`, 2-pass `pdflatex`) and validated non-empty artifacts.
+  3. Re-validated consistency across regenerated outputs (counts + cross-step identity checks).
+  4. Applied one internal methodological-note improvement where interpretation risk remained weak (Step06 score-distribution caveat), then regenerated affected PDF in place.
+
+- Commands/pipelines run:
+  - `python3 working/analysis/empirics/empirics_step00_overview.py`
+  - `python3 working/analysis/empirics/empirics_step01_reliability.py`
+  - `python3 working/analysis/empirics/empirics_step02_client_agent_flow.py`
+  - `python3 working/analysis/empirics/empirics_step03_temporal_dynamics.py`
+  - `python3 working/analysis/empirics/empirics_step04_identity_transfer.py`
+  - `python3 working/analysis/empirics/empirics_step05_owner_behavior.py`
+  - `python3 working/analysis/empirics/empirics_step06_top_client_address.py`
+  - `pdflatex` (2 passes each) on `STEP_00`..`STEP_06` TeX summaries.
+
+- Fixes / improvements applied:
+  - **Step06 figure-explanation strengthening** (`working/results/empirics/summaries/STEP_06_top_client_address_profile.tex`)
+    - In Fig06b note, added explicit caveat that `0` out-of-range rows indicates mechanical range compliance only, not automatic score calibration validity; interpretation should include dispersion/tail shape and external benchmarks.
+  - Regenerated affected output:
+    - `working/results/empirics/summaries/STEP_06_top_client_address_profile.pdf`
+
+- Consistency/repro checks passed:
+  - Figures present/non-empty: `30/30`.
+  - Tables present/non-empty: `43/43`.
+  - Summary PDFs present/non-empty: `7/7`.
+  - Step02 ordering valid: `top1 <= top5 <= top10 <= 1` (`0.436736 <= 0.697340 <= 0.717469`).
+  - Step03 sanity bounds valid: observed-delay agents `<=` registered agents; burst clients `<=` total clients (`2 <= 571`).
+  - Step04 transfer partition valid: `transfer_events_total = mint + burn + secondary` (`37334 = 28418 + 0 + 8916`).
+  - Step05 owner-class partition valid: `n_feedback_total = own + other + nonowner + unknown` (`2782 = 0 + 79 + 2703 + 0`).
+
+- Today regressions/bugs:
+  - None detected in this cycle.
+
+- Blockers / mitigations:
+  - No blockers encountered.
+
+- Run artifacts:
+  - Detailed run log: `working/results/empirics/summaries/.overnight_maintenance_20260319_0220.log`
+
+- Outcome:
+  - Overnight maintenance cycle completed successfully.
+  - Edits remained internal and non-destructive; affected outputs regenerated in place.
+
+## 2026-03-19 03:20 CET (02:20 UTC)
+
+- Scope executed:
+  1. Full reproducibility re-run of empirics scripts `step00`..`step06`.
+  2. Full rebuild of summary PDFs `STEP_00`..`STEP_06` (2-pass `pdflatex`).
+  3. Consistency checks across generated tables/figures/PDFs and cross-step identity constraints.
+  4. Methodological-note reinforcement for Step03 figure interpretation, then in-place PDF regeneration.
+
+- Fixes / improvements applied:
+  - **Regression fix (overnight checker compatibility):** added robust alias-aware checker script `working/analysis/empirics/overnight_consistency_check.py` to handle metric-key drift across Step03/Step04/Step05 key-metrics CSVs.
+  - **Methodological note strengthened** (`working/results/empirics/summaries/STEP_03_temporal_dynamics.tex`):
+    - In F8 note, added explicit caveat that 2000-block bins are block-time units (not civil-time bins), so block→hours/days conversion is approximate due to variable Ethereum block time.
+  - Regenerated affected output in place:
+    - `working/results/empirics/summaries/STEP_03_temporal_dynamics.pdf`
+
+- Consistency/repro checks passed:
+  - Figures present/non-empty: `30/30`.
+  - Tables present/non-empty: `43/43`.
+  - Summary PDFs present/non-empty: `7/7`.
+  - Step02 ordering valid: `top1 <= top5 <= top10 <= 1` (`0.436736 <= 0.697340 <= 0.717469`).
+  - Step03 sanity bounds valid: observed-delay agents `<=` registered agents; burst clients `<=` total clients (`1470 <= 28418`, `2 <= 571`).
+  - Step04 transfer partition valid: `transfer_events_total = mint + burn + secondary` (`37334 = 28418 + 0 + 8916`).
+  - Step05 owner-class partition valid: `n_feedback_total = own + other + nonowner + unknown` (`2782 = 0 + 79 + 2703 + 0`).
+
+- Today regressions/bugs:
+  - Detected during maintenance: overnight inline checker expected deprecated metric key `n_burst_clients_threshold10` and failed with `KeyError`.
+  - Fixed by introducing alias-aware metric resolution in `overnight_consistency_check.py`; rerun completed cleanly.
+
+- Blockers / mitigations:
+  - **Blocker (resolved):** key-name drift in key-metrics CSVs broke the first consistency-check pass.
+  - **Mitigation:** implemented resilient alias mapping for legacy/new metric names and reran the full check suite successfully.
+
+- Run artifacts:
+  - Detailed run log: `working/results/empirics/summaries/.overnight_maintenance_20260319_0320.log`
+
+- Outcome:
+  - Overnight maintenance cycle completed successfully.
+  - Edits remained internal and non-destructive; affected outputs regenerated in place.
+
+## 2026-03-19 04:24 CET (03:24 UTC)
+
+- Scope executed:
+  1. Re-ran full empirics maintenance pipeline (`step00`..`step06`) and regenerated tables/figures/markdown outputs in place.
+  2. Recompiled all summary PDFs (`STEP_00`..`STEP_06`, 2-pass `pdflatex` each).
+  3. Ran `overnight_consistency_check.py` after regeneration.
+  4. Performed explicit reproducibility hash checks (pre/post snapshots over scripts, CSV tables, figure PDFs, summary MD/TEX/PDF).
+
+- Consistency status (pass):
+  - `figures_ok=30/30`
+  - `tables_ok=43/43`
+  - `reports_ok=7/7`
+  - `step02_ordering` valid (`top1 <= top5 <= top10 <= 1`)
+  - `step03_delay_bound` and `step03_burst_bound` valid
+  - `step04_partition` valid (`total = mint + burn + secondary`)
+  - `step05_partition` valid
+
+- Regression/bug found and fixed:
+  - **Issue:** summary report PDFs (`STEP_00`..`STEP_06`) were semantically stable but byte-unstable across repeated `pdflatex` runs (hash drift), weakening strict reproducibility checks.
+  - **Fix applied:** added reproducible PDF metadata directives in all report TeX preambles:
+    - `\pdfinfoomitdate=1`
+    - `\pdftrailerid{}`
+    - `\pdfsuppressptexinfo=15`
+  - **Validation:** after patch, repeated recompile hash check reports `pdf_determinism=stable` across all `STEP_*.pdf`.
+
+- Method/maintenance improvement:
+  - Updated `working/analysis/empirics/overnight_consistency_check.py` to include TeX reproducibility preamble audit:
+    - new check: `tex_repro_preamble_ok=7/7`.
+  - This strengthens overnight guardrails by catching future regressions in report reproducibility settings.
+
+- Blockers:
+  - None blocking in current cycle.
+
+- Outcome:
+  - Overnight maintenance completed successfully.
+  - Edits were internal and non-destructive; affected outputs regenerated in place.
+
+## 2026-03-19 05:23 CET (04:23 UTC)
+
+- Scope executed:
+  1. Re-ran full ERC8004 empirics pipeline (`step00`..`step06`) to re-check reproducibility across scripts/tables/figures/summaries.
+  2. Rebuilt all summary PDFs (`STEP_00`..`STEP_06`) with 2-pass `pdflatex` per report.
+  3. Re-ran consistency checks (`overnight_consistency_check.py`) on refreshed artifacts.
+  4. Re-checked table-level reproducibility with pre/post SHA256 snapshot diff.
+
+- Commands/pipelines run:
+  - `python3 working/analysis/empirics/empirics_step00_overview.py`
+  - `python3 working/analysis/empirics/empirics_step01_reliability.py`
+  - `python3 working/analysis/empirics/empirics_step02_client_agent_flow.py`
+  - `python3 working/analysis/empirics/empirics_step03_temporal_dynamics.py`
+  - `python3 working/analysis/empirics/empirics_step04_identity_transfer.py`
+  - `python3 working/analysis/empirics/empirics_step05_owner_behavior.py`
+  - `python3 working/analysis/empirics/empirics_step06_top_client_address.py`
+  - `pdflatex` (2 passes each) on:
+    - `STEP_00_empirics_overview.tex`
+    - `STEP_01_empirics_reliability.tex`
+    - `STEP_02_client_agent_flow.tex`
+    - `STEP_03_temporal_dynamics.tex`
+    - `STEP_04_identity_transfer.tex`
+    - `STEP_05_owner_behavior.tex`
+    - `STEP_06_top_client_address_profile.tex`
+  - `python3 working/analysis/empirics/overnight_consistency_check.py`
+
+- Maintenance findings/fixes:
+  - No new script-level regressions detected in this cycle.
+  - No destructive edits applied.
+
+- Repro/consistency checks passed:
+  - Figures: `30/30` non-empty PDFs.
+  - Tables: `43/43` non-empty CSVs.
+  - Reports: `7/7` non-empty summary PDFs.
+  - TeX reproducibility preamble coverage: `7/7` (`\\pdfinfoomitdate`, `\\pdftrailerid{}`, `\\pdfsuppressptexinfo=15`).
+  - Step02 ordering valid: `0.436736 <= 0.697340 <= 0.717469 <= 1`.
+  - Step03 bounds valid: `1470 <= 28418` and `2 <= 571`.
+  - Step04 partition valid: `37334 = 37334`.
+  - Step05 partition valid: `2782 = 2782`.
+  - Table-level reproducibility diff (pre/post SHA256): no differences.
+
+- Blockers / mitigations:
+  - **Blocker (resolved during run):** initial PDF rebuild attempt failed because TeX was executed from repository root, so relative figure paths (`../figures/...`) were unresolved.
+  - **Mitigation applied:** reran `pdflatex` from `working/results/empirics/summaries/` (correct relative path context); full rebuild completed successfully.
+  - **Warning (non-blocking):** matplotlib `Unable to import Axes3D` warning still appears in environment.
+  - **Mitigation:** workflow remains 2D-only and completed successfully; warning tracked for future environment normalization.
+
+- Outcome:
+  - Overnight maintenance cycle completed successfully.
+  - Outputs regenerated in place; edits remained internal and non-destructive.
