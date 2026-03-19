@@ -2692,3 +2692,45 @@
 - Outcome:
   - Overnight maintenance cycle completed successfully.
   - No destructive changes; outputs regenerated in place.
+
+## 2026-03-19 01:20 CET (00:20 UTC)
+
+- Scope executed:
+  1. Full reproducibility re-run of empirics scripts `step00`..`step06`.
+  2. Full rebuild of summary PDFs `STEP_00`..`STEP_06` (2-pass `pdflatex`).
+  3. Consistency checks on regenerated tables/figures/PDFs (presence, non-empty artifacts, and cross-step identities).
+  4. Targeted methodological improvement on Step06 figure/discussion interpretation, then in-place PDF regeneration.
+
+- Commands run (core):
+  - `python3 working/analysis/empirics/empirics_step00_overview.py`
+  - `python3 working/analysis/empirics/empirics_step01_reliability.py`
+  - `python3 working/analysis/empirics/empirics_step02_client_agent_flow.py`
+  - `python3 working/analysis/empirics/empirics_step03_temporal_dynamics.py`
+  - `python3 working/analysis/empirics/empirics_step04_identity_transfer.py`
+  - `python3 working/analysis/empirics/empirics_step05_owner_behavior.py`
+  - `python3 working/analysis/empirics/empirics_step06_top_client_address.py`
+  - `pdflatex` (2 passes each) on `STEP_00`..`STEP_06` from `working/results/empirics/summaries/`.
+
+- Fixes / improvements applied:
+  - **Step06 methodological-note strengthening** (`working/results/empirics/summaries/STEP_06_top_client_address_profile.tex`)
+    - Added explicit selection-bias caveat (top client is selected ex-post as sample argmax).
+    - Added guidance to use benchmark distributions (top-k / quantiles / placebo-rank) for comparative/causal claims.
+  - Regenerated affected output in place:
+    - `working/results/empirics/summaries/STEP_06_top_client_address_profile.pdf`
+
+- Consistency/repro checks passed:
+  - Figure PDFs present/non-empty: `30/30`.
+  - Table CSVs present/non-empty: `43/43`.
+  - Summary PDFs present/non-empty: `7/7` (`STEP_00`..`STEP_06`).
+  - Step02 ordering identity valid: `top1 <= top5 <= top10 <= 1`.
+  - Step03 sanity bounds valid: observed-delay agents `<=` registered agents; burst clients `<=` total unique clients.
+  - Step04 transfer partition valid: `transfer_events_total = mint + burn + secondary` (`37334 = 28418 + 0 + 8916`).
+  - Step05 owner-class partition valid: `n_feedback_total = own + other + nonowner + unknown` (`2782 = 0 + 79 + 2703 + 0`).
+
+- Blockers / warnings:
+  - **Blocker (resolved during run):** initial `pdflatex` invocation from repo root could not resolve relative figure paths for TeX files.
+  - **Mitigation applied:** compile TeX from `working/results/empirics/summaries/` (where relative `../figures/...` references resolve correctly); full PDF rebuild then completed.
+
+- Outcome:
+  - Overnight maintenance cycle completed successfully.
+  - Edits remained internal and non-destructive; affected outputs regenerated in place.

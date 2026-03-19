@@ -1,0 +1,196 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{url}
+\geometry{margin=2.2cm}
+\title{ERC8004 Empirics -- Step 06 Top-client address deep profile}
+\author{ERC8004-Specialist}
+\date{Rebuild timestamp tracked in overnight\_maintenance\_log.md}
+
+\begin{document}
+\maketitle
+
+\section*{Executive summary}
+Questo step costruisce un profilo completo e mirato del top client individuato in Step 03:
+\texttt{0xf653...c807e} (address completo nelle tabelle Step06).
+L'analisi copre: composizione semantica dei tag, distribuzione dei valori e score normalizzati,
+concentrazione per agent target, dinamica temporale e controlli su range/decimali.
+
+Risultati chiave:
+\begin{itemize}
+  \item feedback emessi dal top client: \textbf{1215} su 2782 totali (\textbf{43.67\%});
+  \item agent distinti toccati: \textbf{1102} su 1470 con almeno un feedback (\textbf{74.97\%});
+  \item composizione tag estremamente concentrata in due assi: \textbf{trust} (67.33\%) e \textbf{liveness} (32.67\%);
+  \item nessun out-of-range nello score normalizzato: \textbf{0/1215};
+  \item nessun uso di decimali su questo address (\texttt{valueDecimals>0}: \textbf{0}).
+\end{itemize}
+
+\section{Obiettivo analitico}
+L'obiettivo non è solo quantificare il peso volumetrico del top client, ma caratterizzare la sua \emph{firma comportamentale}:
+\begin{enumerate}
+  \item \textbf{firma semantica} (tag1/tag2 usati),
+  \item \textbf{firma numerica} (value, valueDecimals, score normalizzato),
+  \item \textbf{firma strutturale} (dispersione dei feedback su agent),
+  \item \textbf{firma temporale} (quando si concentra l'attività).
+\end{enumerate}
+
+\section{Dati, definizioni e pipeline}
+\textbf{Input:}
+\begin{itemize}
+  \item \path{working/data/raw/2026-03-07_1220_eth_validation_fix/ethereum_1/}
+  \item \path{reputation_newfeedback.csv}
+\end{itemize}
+
+\textbf{Definizioni operative:}
+\begin{itemize}
+  \item top client: address con massimo numero di feedback nel dataset; in caso di parità si applica tie-break deterministico (ordinamento lessicografico crescente dell'address) per garantire riproducibilità;
+  \item ranking top-client condizionato allo snapshot: cambiando finestra/estrazione input, possono cambiare identity del top client e percentuali condizionate;
+  \item score normalizzato:
+  \[
+  score\_scaled = \frac{value}{10^{valueDecimals}};
+  \]
+  \item out-of-range: record con \(score\_scaled<0\) oppure \(score\_scaled>100\);
+  \item bin temporali per timeline: ampiezza fissa 5000 blocchi.
+\end{itemize}
+
+\section{Risultati quantitativi principali}
+\subsection*{S1. Sintesi metrica}
+\begin{center}
+\begin{tabular}{|p{10.4cm}|r|}
+\hline
+\textbf{Indicatore} & \textbf{Valore} \\
+\hline
+Feedback top client & 1215 \\
+\hline
+Share sul totale feedback dataset & 43.67\% \\
+\hline
+Agent distinti toccati & 1102 \\
+\hline
+Copertura su agent con almeno un feedback & 74.97\% \\
+\hline
+Score validi (normalizzati) & 1215 \\
+\hline
+Score out-of-range [0,100] & 0 (0.00\%) \\
+\hline
+Record con valueDecimals $>0$ & 0 \\
+\hline
+Record con decimali significativi post-scaling & 0 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection*{S2. Profilo tag}
+La firma semantica del top client è molto netta.
+Distribuzione \texttt{tag1}:
+\begin{itemize}
+  \item \texttt{trust}: 818 feedback (67.33\%)
+  \item \texttt{liveness}: 397 feedback (32.67\%)
+\end{itemize}
+Distribuzione \texttt{tag2}:
+\begin{itemize}
+  \item \texttt{oracle-screening}: 818 (67.33\%)
+  \item \texttt{liveness-check}: 397 (32.67\%)
+\end{itemize}
+
+Quindi questo address non è ``generalista'': opera quasi esclusivamente su una coppia semantica trust/liveness.
+\textbf{Caveat:} tutte le percentuali in questa sezione sono condizionate ai soli 1215 feedback del top client (non alla distribuzione globale del dataset).
+
+\subsection*{S3. Concentrazione su agent target}
+Pur avendo volume alto, il top client non è concentrato su pochi agent.
+Dalla tabella agent-level:
+\begin{itemize}
+  \item massimo feedback su singolo agent: 3;
+  \item agent con almeno 2 feedback: 105 (su 1102);
+  \item quota cumulata top-5 agent: 1.23\%;
+  \item quota cumulata top-20 agent: 3.95\%.
+\end{itemize}
+Interpretazione: strategia \emph{wide coverage}, non \emph{repetition-heavy} su pochi target.
+\textbf{Caveat inferenziale:} una dispersione ampia sui target non implica automaticamente assenza di coordinamento; per distinguere screening legittimo da comportamento orchestrato serve integrazione con segnali esterni (es. co-movimento temporale con altri client e metadata off-chain).
+
+\section{Figure (costruzione e lettura)}
+\subsection*{F6a -- Distribuzione tag1 del top client}
+\textbf{Path:} \texttt{working/results/empirics/figures/fig06a\_top\_client\_tag1\_distribution.pdf}
+
+Bar chart orizzontale dei tag1 ordinati per frequenza (top-15; in pratica 2 etichette non nulle).
+\textbf{Caveat di lettura:} la figura misura composizione interna del top client; non va interpretata come quota tag sull'intero universo ERC8004.
+
+\begin{center}
+\includegraphics[width=0.86\textwidth]{../figures/fig06a_top_client_tag1_distribution.pdf}
+\end{center}
+
+\subsection*{F6b -- Distribuzione score del top client}
+\textbf{Path:} \texttt{working/results/empirics/figures/fig06b\_top\_client\_score\_distribution.pdf}
+
+Istogramma dei soli score in range [0,100], con box informativo su numerosità valida e out-of-range.
+Nel caso specifico non ci sono out-of-range.
+\textbf{Nota metodologica:} la lettura va fatta congiuntamente a \texttt{valueDecimals}: quando i decimali sono nulli (come qui), la distribuzione riflette direttamente la scala intera originale senza smoothing da normalizzazione frazionaria.
+
+\begin{center}
+\includegraphics[width=0.86\textwidth]{../figures/fig06b_top_client_score_distribution.pdf}
+\end{center}
+
+\subsection*{F6c -- Curva di concentrazione per rank agent}
+\textbf{Path:} \texttt{working/results/empirics/figures/fig06c\_top\_client\_agent\_concentration.pdf}
+
+Asse x in scala log (rank agent per frequenza), curva principale dei conteggi e curva secondaria di quota cumulata.
+Serve per diagnosticare rapidamente se il client è focalizzato su pochi target o distribuito su molti.
+\textbf{Caveat di lettura:} con asse rank logaritmico, piccole distanze visive nelle prime posizioni possono corrispondere a differenze assolute rilevanti nei conteggi. Inoltre, quando il massimo feedback per singolo agent è basso (qui: 3), la curva va letta soprattutto come indicatore di ampiezza copertura, non come evidenza di targeting ripetitivo ad alta intensità.
+
+\begin{center}
+\includegraphics[width=0.88\textwidth]{../figures/fig06c_top_client_agent_concentration.pdf}
+\end{center}
+
+\subsection*{F6d -- Timeline attività (bin 5000 blocchi)}
+\textbf{Path:} \texttt{working/results/empirics/figures/fig06d\_top\_client\_timeline\_bins5000.pdf}
+
+Distribuzione temporale dei feedback del top client lungo l'intervallo osservato.
+\textbf{Nota metodologica:} i bin da 5000 blocchi privilegiano robustezza/leggibilità rispetto alla granularità intra-bin; picchi isolati vanno interpretati come finestre aggregate e non come burst puntuali a livello transazione. Inoltre, la larghezza in blocchi non è equivalente a finestre temporali uniformi in ore/giorni: la mappatura in tempo reale richiede i timestamp on-chain dei blocchi.
+
+\begin{center}
+\includegraphics[width=0.88\textwidth]{../figures/fig06d_top_client_timeline_bins5000.pdf}
+\end{center}
+
+\section{Discussione}
+Il top client domina il volume complessivo dei feedback, ma lo fa con una dinamica selettiva nei contenuti e diffusa nei target.
+Dal lato semantico, l'attività è quasi interamente confinata su trust/liveness;
+ dal lato strutturale, i feedback sono dispersi su una platea molto ampia di agent, con bassa ripetizione per coppia client-agent.
+Questo pattern è coerente con un comportamento di screening esteso e non con campagne focalizzate su pochi agent.
+
+\textbf{Caveat metodologico (selezione ex-post):} l'address analizzato è definito come massimo osservato nel campione (argmax dei conteggi). Di conseguenza, differenze ``estreme'' rispetto a un client medio possono riflettere anche effetto di selezione. Per inferenze causali/comparative serve confronto con benchmark distribution (es. top-k, quantili, o placebo-rank) e non solo con statistiche puntuali del singolo top client.
+
+Sul piano della qualità numerica, l'assenza di out-of-range e di decimali sul top client rende il suo profilo stabile rispetto al vincolo di score in [0,100].
+
+\section{Output prodotti (Step 06)}
+\textbf{Script:}
+\begin{itemize}
+  \item \texttt{working/analysis/empirics/empirics\_step06\_top\_client\_address.py}
+\end{itemize}
+
+\textbf{Tabelle:}
+\begin{itemize}
+  \item \texttt{working/results/empirics/tables/step06\_top\_client\_profile\_metrics.csv}
+  \item \texttt{working/results/empirics/tables/step06\_top\_client\_tag1\_distribution.csv}
+  \item \texttt{working/results/empirics/tables/step06\_top\_client\_tag2\_distribution.csv}
+  \item \texttt{working/results/empirics/tables/step06\_top\_client\_value\_stats\_by\_tag1.csv}
+  \item \texttt{working/results/empirics/tables/step06\_top\_client\_feedback\_by\_agent.csv}
+  \item \texttt{working/results/empirics/tables/step06\_top\_client\_time\_bins\_5000.csv}
+  \item \texttt{working/results/empirics/tables/step06\_top\_client\_score\_out\_of\_range\_rows.csv}
+\end{itemize}
+
+\textbf{Figure (PDF):}
+\begin{itemize}
+  \item \texttt{working/results/empirics/figures/fig06a\_top\_client\_tag1\_distribution.pdf}
+  \item \texttt{working/results/empirics/figures/fig06b\_top\_client\_score\_distribution.pdf}
+  \item \texttt{working/results/empirics/figures/fig06c\_top\_client\_agent\_concentration.pdf}
+  \item \texttt{working/results/empirics/figures/fig06d\_top\_client\_timeline\_bins5000.pdf}
+\end{itemize}
+
+\textbf{Summary breve:}
+\begin{itemize}
+  \item \texttt{working/results/empirics/summaries/step06\_top\_client\_address\_profile.md}
+\end{itemize}
+
+\end{document}
