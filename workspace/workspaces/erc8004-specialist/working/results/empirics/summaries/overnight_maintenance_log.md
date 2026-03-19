@@ -2907,3 +2907,52 @@
 - Outcome:
   - Overnight maintenance cycle completed successfully.
   - Outputs regenerated in place; edits remained internal and non-destructive.
+
+## 2026-03-19 07:22 CET (06:22 UTC)
+
+- Scope executed:
+  1. Re-ran full ERC8004 empirics pipeline (`step00`..`step06`) to verify reproducibility across scripts/tables/figures/summaries.
+  2. Rebuilt all summary PDFs (`STEP_00`..`STEP_06`, 2-pass `pdflatex` each).
+  3. Ran `overnight_consistency_check.py` on regenerated outputs.
+  4. Strengthened one weak figure-reading note in Step06 report and regenerated affected PDF in place.
+
+- Commands/pipelines run:
+  - `python3 working/analysis/empirics/empirics_step00_overview.py`
+  - `python3 working/analysis/empirics/empirics_step01_reliability.py`
+  - `python3 working/analysis/empirics/empirics_step02_client_agent_flow.py`
+  - `python3 working/analysis/empirics/empirics_step03_temporal_dynamics.py`
+  - `python3 working/analysis/empirics/empirics_step04_identity_transfer.py`
+  - `python3 working/analysis/empirics/empirics_step05_owner_behavior.py`
+  - `python3 working/analysis/empirics/empirics_step06_top_client_address.py`
+  - `pdflatex` (2 passes each) on `STEP_00`..`STEP_06` TeX summaries
+  - `python3 working/analysis/empirics/overnight_consistency_check.py`
+
+- Maintenance improvements applied:
+  - **Step06 figure explanation strengthened** (`working/results/empirics/summaries/STEP_06_top_client_address_profile.tex`)
+    - Added explicit caveat in Fig06a note: with very low category cardinality, absolute counts must be reported alongside percentages to avoid over-interpretation.
+  - Regenerated affected output:
+    - `working/results/empirics/summaries/STEP_06_top_client_address_profile.pdf`
+
+- Repro/consistency checks passed:
+  - Figures: `30/30` non-empty PDFs.
+  - Tables: `43/43` non-empty CSVs.
+  - Reports: `7/7` non-empty summary PDFs.
+  - TeX reproducibility preamble coverage: `7/7`.
+  - Step02 ordering valid: `0.436736 <= 0.697340 <= 0.717469 <= 1`.
+  - Step03 bounds valid: `1470 <= 28418` and `2 <= 571`.
+  - Step04 partition valid: `37334 = 37334`.
+  - Step05 partition valid: `2782 = 2782`.
+
+- Blockers / mitigations:
+  - **Blocker (resolved during run):** checker initially failed with missing files when launched from `working/` (wrong relative base path).
+  - **Mitigation applied:** reran `overnight_consistency_check.py` from project root (`workspaces/erc8004-specialist`); all checks passed.
+  - **Warning (non-blocking):** matplotlib `Unable to import Axes3D` warning still present.
+  - **Mitigation:** workflow remains 2D-only and completed successfully; warning tracked for later environment normalization.
+
+- Run artifacts:
+  - Detailed run log: `working/results/empirics/summaries/.overnight_maintenance_20260319_0621.log`
+  - Consistency check log: `working/results/empirics/summaries/.overnight_checks_20260319_0621.log`
+
+- Outcome:
+  - Overnight maintenance cycle completed successfully.
+  - Outputs regenerated in place; edits remained internal and non-destructive.

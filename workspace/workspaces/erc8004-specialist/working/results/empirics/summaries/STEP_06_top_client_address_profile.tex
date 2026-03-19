@@ -6,6 +6,11 @@
 \usepackage{amsmath}
 \usepackage{url}
 \geometry{margin=2.2cm}
+% Reproducible PDF metadata (reduces run-to-run hash drift)
+\pdfinfoomitdate=1
+\pdftrailerid{}
+\pdfsuppressptexinfo=15
+
 \title{ERC8004 Empirics -- Step 06 Top-client address deep profile}
 \author{ERC8004-Specialist}
 \date{Rebuild timestamp tracked in overnight\_maintenance\_log.md}
@@ -115,7 +120,7 @@ Interpretazione: strategia \emph{wide coverage}, non \emph{repetition-heavy} su 
 \textbf{Path:} \texttt{working/results/empirics/figures/fig06a\_top\_client\_tag1\_distribution.pdf}
 
 Bar chart orizzontale dei tag1 ordinati per frequenza (top-15; in pratica 2 etichette non nulle).
-\textbf{Caveat di lettura:} la figura misura composizione interna del top client; non va interpretata come quota tag sull'intero universo ERC8004.
+\textbf{Caveat di lettura:} la figura misura composizione interna del top client; non va interpretata come quota tag sull'intero universo ERC8004. Con una cardinalità di categorie così bassa, è buona pratica riportare sempre anche i conteggi assoluti (oltre alle percentuali) per evitare sovra-interpretazioni su differenze marginali.
 
 \begin{center}
 \includegraphics[width=0.86\textwidth]{../figures/fig06a_top_client_tag1_distribution.pdf}
@@ -126,7 +131,7 @@ Bar chart orizzontale dei tag1 ordinati per frequenza (top-15; in pratica 2 etic
 
 Istogramma dei soli score in range [0,100], con box informativo su numerosità valida e out-of-range.
 Nel caso specifico non ci sono out-of-range.
-\textbf{Nota metodologica:} la lettura va fatta congiuntamente a \texttt{valueDecimals}: quando i decimali sono nulli (come qui), la distribuzione riflette direttamente la scala intera originale senza smoothing da normalizzazione frazionaria.
+\textbf{Nota metodologica:} la lettura va fatta congiuntamente a \texttt{valueDecimals}: quando i decimali sono nulli (come qui), la distribuzione riflette direttamente la scala intera originale senza smoothing da normalizzazione frazionaria. Assenza di out-of-range non implica da sola calibrazione ``corretta'': indica solo rispetto del vincolo meccanico di range e va interpretata insieme a dispersione, code e confronto con benchmark esterni.
 
 \begin{center}
 \includegraphics[width=0.86\textwidth]{../figures/fig06b_top_client_score_distribution.pdf}
